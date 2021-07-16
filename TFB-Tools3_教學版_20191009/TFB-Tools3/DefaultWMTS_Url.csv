@@ -1,0 +1,3 @@
+國土測繪中心,http://maps.nlsc.gov.tw/S_Maps/wmts,WMTS
+中研院百年歷史地圖,http://gis.sinica.edu.tw/tileserver/wmts,WMTS
+台灣地圖,http://gis.forest.gov.tw/arcgis/services/WMS/FHWMS/MapServer/WMSServer?request=GetCapabilities&service=WMS,WMS
