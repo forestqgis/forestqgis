@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>圖資操作工具v3.8.0</string>
+   <string>圖資操作工具v3.8.3</string>
   </property>
   <widget class="QComboBox" name="comboBox_19">
    <property name="geometry">
