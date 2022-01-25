@@ -276,7 +276,7 @@ class TFB_Tools3:
         icon_path = ''
         self.add_action(
             icon_path,
-            text=self.tr(u'圖資操作處理工具v3.8.4'),
+            text=self.tr(u'圖資操作處理工具v3.8.5'),
             callback=self.run,
             parent=self.iface.mainWindow())
         
