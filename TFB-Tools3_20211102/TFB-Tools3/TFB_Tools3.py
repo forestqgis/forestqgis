@@ -276,7 +276,7 @@ class TFB_Tools3:
         icon_path = ''
         self.add_action(
             icon_path,
-            text=self.tr(u'圖資操作處理工具v3.8.3'),
+            text=self.tr(u'圖資操作處理工具v3.8.4'),
             callback=self.run,
             parent=self.iface.mainWindow())
         
@@ -4191,11 +4191,17 @@ class TFB_Tools3:
 
         username = accountList[0][1]
         password = accountList[1][1]
-        url = "http://owms.afasi.gov.tw/asofb/" + self.wmsDia.comboBox.currentText() + "/wms?request=getcapabilities"
+
+        if self.wmsDia.radioButton.isChecked():
+            url = 'http://owms.afasi.gov.tw/asofb/'
+        if self.wmsDia.radioButton_2.isChecked():
+            url = 'http://10.51.231.101/asofb/owms/'
+
+        url += self.wmsDia.comboBox.currentText() + "/wms?request=getcapabilities"
         #QMessageBox.information(self.iface.mainWindow(), "mes", url)
         request = urllib.request.Request(url)
         # base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
-        base64string = base64.encodestring(('%s:%s' % (username,password)).encode()).decode().replace('\n', '')
+        base64string = base64.encodebytes(('%s:%s' % (username,password)).encode()).decode().replace('\n', '')
         request.add_header("Authorization", "Basic %s" % base64string)
         try:
             response = urllib.request.urlopen(request)

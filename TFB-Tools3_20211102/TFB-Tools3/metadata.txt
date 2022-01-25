@@ -9,8 +9,8 @@
 [general]
 name=TFB_Tools3
 qgisMinimumVersion=3.4
-description=TFB-Tools3_v3.8.3_plugins
-version=3.8.3
+description=TFB-Tools3_v3.8.4_plugins
+version=3.8.4
 author=FCU-GIS
 email=gis.tw
 
