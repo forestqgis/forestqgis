@@ -276,7 +276,7 @@ class TFB_Tools3:
         icon_path = ''
         self.add_action(
             icon_path,
-            text=self.tr(u'圖資操作處理工具v3.8.2'),
+            text=self.tr(u'圖資操作處理工具v3.8.5'),
             callback=self.run,
             parent=self.iface.mainWindow())
         
@@ -2782,13 +2782,23 @@ class TFB_Tools3:
         innUSR = self.cadastreDia.lineEdit_7.text()
         innPWD = self.cadastreDia.lineEdit_5.text()
         landWFS3 = self.cadastreDia.lineEdit_13.text()
-        uri = url + landWFS3 + '?LD=' + unit + '&SCNO=' + sec + '&PO=' + no + '&usr=' + innUSR + '&pwd=' + innPWD
 
         # out = self.cadastreDia.listWidget.findItems(self.cadastreDia.lineEdit.text(), QtCore.Qt.MatchExactly)
-        
+        if not len(no) == 8:
+            leftS = no.split('-')[0]
+            rightS = ''
+            if len(no.split('-')) == 2:
+                rightS += no.split('-')[1]
+            
+            leftS.zfill(4)
+            fullNo = leftS.zfill(4) + rightS.zfill(4)
+        else:
+            fullNo = no
+
+        uri = url + landWFS3 + '?LD=' + unit + '&SCNO=' + sec + '&PO=' + fullNo + '&usr=' + innUSR + '&pwd=' + innPWD
         try:
             response = urlopen(uri)
-            self.cadastreDia.listWidget_2.addItem(no)
+            self.cadastreDia.listWidget_2.addItem(fullNo)
             itemList = []
 
             for i in range(0, self.cadastreDia.listWidget_2.count(), 1):
@@ -4181,11 +4191,17 @@ class TFB_Tools3:
 
         username = accountList[0][1]
         password = accountList[1][1]
-        url = "http://owms.afasi.gov.tw/asofb/" + self.wmsDia.comboBox.currentText() + "/wms?request=getcapabilities"
+
+        if self.wmsDia.radioButton.isChecked():
+            url = 'http://owms.afasi.gov.tw/asofb/'
+        if self.wmsDia.radioButton_2.isChecked():
+            url = 'http://10.51.231.101/asofb/owms/'
+
+        url += self.wmsDia.comboBox.currentText() + "/wms?request=getcapabilities"
         #QMessageBox.information(self.iface.mainWindow(), "mes", url)
         request = urllib.request.Request(url)
         # base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
-        base64string = base64.encodestring(('%s:%s' % (username,password)).encode()).decode().replace('\n', '')
+        base64string = base64.encodebytes(('%s:%s' % (username,password)).encode()).decode().replace('\n', '')
         request.add_header("Authorization", "Basic %s" % base64string)
         try:
             response = urllib.request.urlopen(request)
